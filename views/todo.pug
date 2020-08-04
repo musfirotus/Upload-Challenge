@@ -38,16 +38,16 @@ block content
                     if(todo[a].status == false)
                         th="Undone"
                         th
-                          a(class="btn btn-success" href=`/${todo[a]._id}/done` role="button")
+                          a(class="btn btn-success" href=`/done/${todo[a]._id}` role="button")
                             i.fas.fa-check-circle
                     else
                         th="Done"
                         th
-                          a(class="btn btn-warning" href=`/${todo[a]._id}/undone` role="button")
+                          a(class="btn btn-warning" href=`/undone/${todo[a]._id}` role="button")
                             i.fas.fa-undo
                     th
-                      a(class="btn btn-primary" style="align: left" href=`/detail/${todo[a]._id}` role="button")
+                      a(class="btn btn-primary" style="align: left" href=`/${todo[a]._id}/detail` role="button")
                         i.fas.fa-search-plus
                       span  
-                      a(href= `delete/${todo[a]._id}` ).btn.btn-danger.btn-sm
+                      a(href= `/delete/${todo[a]._id}` ).btn.btn-danger.btn-sm
                         i.fas.fa-trash-alt

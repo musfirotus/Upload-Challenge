@@ -26,46 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app
   .use('/', homeRouter)
   .use('/users', usersRouter)
-// Detail Data
-app.get("/detail/:_id?", async (req, res) => {
-  const todoList = await getTodo();
-  let task = null;
-  if (req.params._id !== undefined) {
-    tasks = await todoList.find((e) => e._id == req.params._id);
-    res.render("details", { task });
-  } else {
-    res.render("detail", { tasks: todoList });
-  }
-});
-app.post("/tododetails", async (req, res) => {
-  await todoModel.updateOne({_id:req.body._id},{name:req.body.name, description:req.body.description},error)
-  res.redirect("/");
-});
-// Hapus data
-// app.get("/:id?/del", async (req, res) => {
-//   await todoModel.deleteOne({
-//       _id: req.params.id
-//   }, error)
-//   res.redirect("/");
-// });
-// Ubah data menjadi Done
-app.get("/:id?/done", async (req, res) => {
-  await todoModel.updateOne({
-      _id: req.params.id
-  }, {
-      status: true
-  }, error)
-  res.redirect("/");
-});
-// Ubah data menjadi Undone
-app.get("/:id?/undone", async (req, res) => {
-  await todoModel.updateOne({
-      _id: req.params.id
-  }, {
-      status: false
-  }, error)
-  res.redirect("/");
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -73,7 +33,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

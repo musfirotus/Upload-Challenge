@@ -8,6 +8,12 @@ const homeController = require('../controllers/homeController')
 router.route('/')
     .get(homeController.tampil)
     .post(homeController.add)
+// Delete Data
 router.get("/delete/:id", homeController.delete);
+// Ubah data menjadi Done
+router.get("/done/:id", homeController.done);
+// Ubah data menjadi Undone
+router.get("/undone/:id", homeController.undone);
+router.get('/:id/detail', homeController.detail);
 
 module.exports = router;
