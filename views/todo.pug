@@ -1,57 +1,53 @@
-extends layouts.pug
+extends layout.pug
 
 block content
-    .col-12
-        h1 Home
-        hr
-        h1 
-          center Tambah Todo List
-    .col-12
-      form(action='/' method="POST")
-        .row
-          .col
-            label(for = 'name') Tambah Task
-            input(id = 'name' type='text' class="form-control mb-3" name="name" placeholder="Task")
-          .col
-            label(for = 'des') Tambah Deskripsi Task
-            input(id='des' type='text' class="form-control mb-3" name="description" placeholder="Description")
-        .row
-          button(type="submit" class="btn btn-primary") Send
-
-    .col-12
-      hr
-      h3 List Todo
-      table(class="table table-dark")
-          tr
-            th No
-            th#nama Todo
-            th#des Description
-            th#status Status
-            th#editstatus Edit Status
-            th#aksi Action
-        
-          each todo,i in todo
-            .row
-              tr
-                td= i + 1
-                .col-3
-                  td=todo.name
-                .col-3
-                  td=todo.description
-                .col-2
-                  if todo.status == false 
-                    td= "Undone"
+  .col-12
+    h1 Home
+    hr
+    h1 Tambah Todo List
+  .col-12
+    form(action='/' method="POST")
+      .row
+        .col
+          input(id = 'name' type='text' class="form-control mb-3" name="name" placeholder="Task")
+        .col
+          input(id='des' type='text' class="form-control mb-3" name="description" placeholder="Description")
+      .row
+        button(type="submit" class="btn btn-primary") Send
+    br
+    //- // read all task
+    table(class="table table-dark")
+        thead
+            tr
+                th No.
+                th Task
+                th Deskripsi
+                th Image
+                th Status
+                th Ubah Status
+                th Action
+        tbody
+        if(todo)
+            each _, a in todo  
+                tr
+                    td #{a+1}
+                    td=todo[a].name
+                    td=todo[a].description
                     td
-                      a(class="btn btn-success" href=`/${todo._id}/done` role="button")
-                        i.fas.fa-check-circle
-                  else
-                    td= "Done"
-                    td
-                      a(class="btn btn-warning" href=`/${todo._id}/undone` role="button")
-                        i.fas.fa-undo
-                  td
-                    a(class="btn btn-primary" style="align: left" href=`/detail/${todo._id}` role="button")
-                      i.fas.fa-search-plus
-                    span  
-                    a(class="btn btn-danger" href=`/${todo._id}/del` role="button")
-                      i.fas.fa-trash-alt
+                      img(src="./images/"+todo[a].image, alt="image", style="width:100%")
+                    if(todo[a].status == false)
+                        th="Undone"
+                        th
+                          a(class="btn btn-success" href=`/${todo[a]._id}/done` role="button")
+                            i.fas.fa-check-circle
+                    else
+                        th="Done"
+                        th
+                          a(class="btn btn-warning" href=`/${todo[a]._id}/undone` role="button")
+                            i.fas.fa-undo
+                    th
+                      a(class="btn btn-primary" style="align: left" href=`/detail/${todo[a]._id}` role="button")
+                        i.fas.fa-search-plus
+                      span  
+                      a(href= `delete/${todo[a]._id}` ).btn.btn-danger.btn-sm
+                        i.fas.fa-trash-alt

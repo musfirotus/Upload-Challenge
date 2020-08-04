@@ -8,7 +8,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
+const homeRouter = require('./routes/home');
 const usersRouter = require('./routes/users');
 
 const app = express();
@@ -23,41 +23,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// callback untuk error
-const error = (error, result) => {
-  console.log(error, result);
-}
-// Mencari Data
-const getTodo = async () => {
-  return await todoModel.find({});
-}
-// Menampilkan data
-app.get('/', async (req, res) => {
-  const todoList = await getTodo()
-      .then((response) => {
-          console.log(response);
-          res.render('todo', {
-              todo: response
-          });
-      })
-      .catch((err) => console.log(err));
-  console.log({
-      todoList
-  });
-})
-// Tambah Data
-app.post('/', async (req, res) => {
-  const addTodo = todoModel({
-      name: req.body.name,
-      description: req.body.description
-  })
-  await addTodo.save(error)
-  console.log(addTodo);
-  res.redirect('/')
-})
+app
+  .use('/', homeRouter)
+  .use('/users', usersRouter)
 // Detail Data
 app.get("/detail/:_id?", async (req, res) => {
   const todoList = await getTodo();
@@ -74,12 +42,12 @@ app.post("/tododetails", async (req, res) => {
   res.redirect("/");
 });
 // Hapus data
-app.get("/:id?/del", async (req, res) => {
-  await todoModel.deleteOne({
-      _id: req.params.id
-  }, error)
-  res.redirect("/");
-});
+// app.get("/:id?/del", async (req, res) => {
+//   await todoModel.deleteOne({
+//       _id: req.params.id
+//   }, error)
+//   res.redirect("/");
+// });
 // Ubah data menjadi Done
 app.get("/:id?/done", async (req, res) => {
   await todoModel.updateOne({
