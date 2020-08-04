@@ -1,0 +1,16 @@
+extends layouts.pug
+
+block content
+    .col-12
+        h1="Detail To Do List"
+    .col-12
+        form(method="POST" action='/updatedetail/:_id?')
+            input(id = 'Task' type='hidden' class="form-control mb-3" name="_id" placeholder="Task" value=`${tasks._id}`)
+            label(for = 'Task') Edit Task
+            input(id = 'Task' type='text' class="form-control mb-3" name="name" placeholder="Task" value=`${tasks.name}`)
+            label(for = 'Des') Edit Description
+            input(id='Des' type='text' class="form-control mb-3" name="description" placeholder="Description" value=`${tasks.description}`) 
+            button(type="submit" class="btn btn-primary") Update
+
+    script.
+     console.log(!{JSON.stringify(tasks)})

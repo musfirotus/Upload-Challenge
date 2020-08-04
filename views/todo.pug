@@ -1,0 +1,57 @@
+extends layouts.pug
+
+block content
+    .col-12
+        h1 Home
+        hr
+        h1 
+          center Tambah Todo List
+    .col-12
+      form(action='/' method="POST")
+        .row
+          .col
+            label(for = 'name') Tambah Task
+            input(id = 'name' type='text' class="form-control mb-3" name="name" placeholder="Task")
+          .col
+            label(for = 'des') Tambah Deskripsi Task
+            input(id='des' type='text' class="form-control mb-3" name="description" placeholder="Description")
+        .row
+          button(type="submit" class="btn btn-primary") Send
+
+    .col-12
+      hr
+      h3 List Todo
+      table(class="table table-dark")
+          tr
+            th No
+            th#nama Todo
+            th#des Description
+            th#status Status
+            th#editstatus Edit Status
+            th#aksi Action
+        
+          each todo,i in todo
+            .row
+              tr
+                td= i + 1
+                .col-3
+                  td=todo.name
+                .col-3
+                  td=todo.description
+                .col-2
+                  if todo.status == false 
+                    td= "Undone"
+                    td
+                      a(class="btn btn-success" href=`/${todo._id}/done` role="button")
+                        i.fas.fa-check-circle
+                  else
+                    td= "Done"
+                    td
+                      a(class="btn btn-warning" href=`/${todo._id}/undone` role="button")
+                        i.fas.fa-undo
+                  td
+                    a(class="btn btn-primary" style="align: left" href=`/detail/${todo._id}` role="button")
+                      i.fas.fa-search-plus
+                    span  
+                    a(class="btn btn-danger" href=`/${todo._id}/del` role="button")
+                      i.fas.fa-trash-alt
