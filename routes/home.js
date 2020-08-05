@@ -15,5 +15,7 @@ router.get("/done/:id", homeController.done);
 // Ubah data menjadi Undone
 router.get("/undone/:id", homeController.undone);
 router.get('/:id/detail', homeController.detail);
+router.post('/det', homeController.details)
+
 
 module.exports = router;
