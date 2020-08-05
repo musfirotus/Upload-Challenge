@@ -1,16 +1,18 @@
-extends layouts.pug
+extends layout.pug
 
 block content
     .col-12
-        h1="Detail To Do List"
+        h1 Edit #{todo.name}
     .col-12
-        form(method="POST" action='/updatedetail/:_id?')
-            input(id = 'Task' type='hidden' class="form-control mb-3" name="_id" placeholder="Task" value=`${tasks._id}`)
-            label(for = 'Task') Edit Task
-            input(id = 'Task' type='text' class="form-control mb-3" name="name" placeholder="Task" value=`${tasks.name}`)
-            label(for = 'Des') Edit Description
-            input(id='Des' type='text' class="form-control mb-3" name="description" placeholder="Description" value=`${tasks.description}`) 
-            button(type="submit" class="btn btn-primary") Update
-
-    script.
-     console.log(!{JSON.stringify(tasks)})
+        form(action='/users' method="POST" enctype="multipart/form-data")
+            label Task
+            input(type='text' value=todo.name class="form-control mb-3" name="name")
+            label Deskripsi
+            input(type='text' value=todo.description class="form-control mb-3" name="description")
+            input(type="hidden" value=todo._id name="id")
+            .form-group
+              img(src=`/images/uploads/${todo.imageFile===undefined?"error":todo.imageFile.filename}`).image
+              .label
+                label(for="exampleInputEmail1") #{todo.imageFile===undefined?"Tdk ada gambar":todo.imageFile.originalname}
+              input.form-control(type="file" name="images")
+            button(type="submit" class="btn btn-primary") Kirim

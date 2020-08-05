@@ -57,23 +57,23 @@ class homeController {
           res.render('detail', { todo:list})
      }
       
-     // static async detail(req, res) {
-     //      console.log("Berhasil Edit list");
-     //      const { params, file, body } = req;
-     //      const image = file === undefined ? "nullObj" : "imageFile";
-     //      List.updateOne(
-     //        { _id: req.body.id },
-     //        {
-     //          $set: {
-     //            name: body.name,
-     //            description: body.description,
-     //            date: new Date(),
-     //            [image]: file,
-     //          },
-     //        },
-     //        { multi: true, new: true }
-     //      ).then((data) => res.redirect(301, "/list/"));
-     // }
+     static async details(req, res) {
+          console.log("Berhasil Edit list");
+          const { params, file, body } = req;
+          const image = file === undefined ? "nullObj" : "imageFile";
+          todoModel.updateOne(
+            { _id: req.body.id },
+            {
+              $set: {
+                name: body.name,
+                description: body.description,
+                date: new Date(),
+                [image]: file,
+              },
+            },
+            { multi: true, new: true }
+          ).then((res) => res.redirect("/"));
+     }
 }
 module.exports = homeController;
 
